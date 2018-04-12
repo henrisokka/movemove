@@ -1,0 +1,7 @@
+<div className={VSS(focus.editorStyles, "wrap")}>
+    <h1>Editori</h1>
+    <p>Tämän editorin avulla voit muokata olemassaolevia pelikenttiä sekä luoda aivan uusia kenttiä.</p>
+    <ValaaScope focus={focus.sceneEditor} />
+    <ValaaScope focus={focus.actionPointEditor} />
+    <ValaaScope focus={focus.challengeEditor} />
+</div> 

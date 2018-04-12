@@ -1,0 +1,126 @@
+<div className={VSS(focus.editorStyles, "wrap")}>
+    <div className="challengeEditor">
+        <h2>Haaste-editori</h2>
+        
+        <h3>Luo uusi haaste</h3>
+       
+            <label for="name" className="createChallengeLabel"> Haasteen nimi: </label> <br />
+            <input type="text" id="name" value={focus.name} onChange={(e) => focus.name = e.target.value} className="textInput inputField" required /> <br />
+            
+            <If test={focus.name.length < 1}>
+                <p>Haasteella pitää olla nimi!</p>
+            </If>
+            
+            <label for="description" className="createChallengeLabel">Liikuntasuorituksen kuvaus:</label> <br />
+            <input type="text" id="description" value={focus.description} onChange={(e) => focus.description = e.target.value} className="textInput descriptionField inputField" /> <br />
+            
+            <label for="description" className="createChallengeLabel">Tarinallinen kuvaus:</label> <br />
+            <input type="text" id="narrative" value={focus.narrative} onChange={(e) => focus.narrative = e.target.value} className="textInput descriptionField inputField" /> <br />
+            
+            <div className="formLine">
+                <label for="timeCheckbox" className="createChallengeLabel">Haasteella on aikarajoite:</label> <br />
+                <input type="checkbox" id="timeCheckbox" checked={focus.categories.timed ? "checked" : ""} onChange={(e) => focus.categories.timed = !focus.categories.timed} className="inputField"  /> <br  />
+                
+                <If test={focus.categories.timed === true}>
+                    <label for="timeAmount" className="createChallengeLabel">Aikamäärä sekunteina:</label> 
+                    <input type="number" id="timeAmount" value={focus.timeAmount} onChange={(e) => focus.timeAmount = e.target.value} className="numberInput" className="inputField" /> <br />
+                </If>
+            </div>    
+            
+            <div className="formLine">
+                <label for="repeatCheckbox" className="createChallengeLabel">Toistoja?:</label> <br />
+                <input type="checkbox" id="repeatCheckbox" checked={focus.categories.repeated ? "checked" : ""} onChange={(e) => focus.categories.repeated = !focus.categories.repeated} className="inputField"   /> <br  />
+                
+                <If test={focus.categories.repeated === true}>
+                    <label for="repeatAmount" className="createChallengeLabel">Toistojen määrä:</label>
+                    <input type="number" id="repeatAmount" value={focus.repeatAmount} onChange={(e) => focus.repeatAmount = e.target.value} className="numberInput inputField" /> <br />
+                </If>
+            </div>
+            
+            
+            <label for="catBalanceCheckbox" className="createChallengeLabel">Tasapainotaidot:</label>
+            <input type="checkbox" id="catBalanceCheckbox" checked={focus.categories.catBalance ? "checked" : ""} onChange={(e) => focus.categories.catBalance = !focus.categories.catBalance} className="inputField"   /> <br  />
+ 
+            <label for="catMovingCheckbox" className="createChallengeLabel">Liikkumistaidot:</label>
+            <input type="checkbox" id="catMovingCheckbox" checked={focus.categories.catMoving ? "checked" : ""} onChange={(e) => focus.categories.catMoving = !focus.categories.catMoving} className="inputField"   /> <br  />
+            
+            <label for="catEquipmentCheckbox" className="createChallengeLabel">Välineenkäsittelytaidot:</label>
+            <input type="checkbox" id="catEquipmentCheckbox" checked={focus.categories.catEquipment ? "checked" : ""} onChange={(e) => focus.categories.catEquipment = !focus.categories.catEquipment} className="inputField"   /> <br  />
+ 
+            <button onClick={
+                () => { 
+                        if (focus.name.length > 0) {
+                            const challenge = new focus.proto({name: focus.name, owner: focus.challengeLib});
+                            challenge.name = focus.name;
+                            challenge.description = focus.description;
+                            challenge.narrative = focus.narrative;
+                            
+                            challenge.categories.timed = focus.categories.timed;
+                            challenge.categories.repeated = focus.categories.repeated;
+                            challenge.categories.catBalance = focus.categories.catBalance;
+                            challenge.categories.catEquipment = focus.categories.catEquipment;
+                            challenge.categories.catMoving = focus.categories.catMoving;
+                            
+                            challenge.repeatAmount = focus.repeatAmount;
+                            challenge.timeAmount = focus.timeAmount;
+                            
+                            focus.name = "";
+                            focus.description = "";
+                            focus.narrative = "";
+                            focus.repeatAmount = "";
+                            focus.timeAmount = "";
+                        }
+                }
+            }>Luo haaste</button>
+            
+        
+            
+        <h3>Muokkaa haastetta</h3> 
+            <If test={focus.challengeLib[Resource.unnamedOwnlings].length < 1}>    
+                   <div>Et ole luonut yhtään tehtävää. Luo uusi tehtävä ylläolevalla lomakkeella.</div>
+            </If>  
+            Valitse muokattava haaste: 
+            <select onChange={(e) => focus.selected = Valaa.Resource.getActiveResource(e.target.value)}>
+                <option value="" selected disabled hidden >Valitse tästä</option>
+                <ForEach focus={focus.challengeLib[Resource.unnamedOwnlings]}>
+                    <option value={focus[Resource.rawId]}>{focus.name}</option>
+                </ForEach>
+            </select> <br />
+            
+            Haasteen nimi: <input type="text" value={focus.selected.name} onChange={(e) => { 
+            const value = e.target.value;
+            focus.selected.name = value;
+            focus.selected[Valaa.name] = value;
+            }} className="textInput"/> <br />
+            Liikuntasuorituksen kuvaus: <input type="text" value={focus.selected.description} onChange={(e) => focus.selected.description = e.target.value}  className="textInput descriptionField inputField" /> <br />
+            Tarinallinen kuvaus: <input type="text" value={focus.selected.narrative} onChange={(e) => focus.selected.narrative = e.target.value}  className="textInput descriptionField inputField" /> <br />
+            Haasteella on aikarajoite: <input type="checkbox" checked={focus.selected.categories.timed ? "checked" : ""} onChange={(e) => focus.selected.categories.timed = !focus.selected.categories.timed}  /> <br  />
+            <If test={focus.selected.categories.timed === true}>
+                <label for="timeAmount" className="createChallengeLabel">Aikamäärä sekunteina:</label> 
+                <input type="number" id="timeAmount" value={focus.selected.timeAmount} onChange={(e) => focus.selected.timeAmount = e.target.value} className="numberInput" className="inputField" /> <br />
+            </If>
+            Tehtävässä on toistoja: <input type="checkbox" checked={focus.selected.categories.repeated ? "checked" : ""} onChange={(e) => focus.selected.categories.repeated = !focus.selected.categories.repeated}  /> <br  />
+            <If test={focus.selected.categories.repeated === true}>
+                <label for="repeatAmount" className="createChallengeLabel">Toistojen määrä:</label> 
+                <input type="number" id="timeAmount" value={focus.selected.repeatAmount} onChange={(e) => focus.selected.repeatAmount = e.target.value} className="numberInput" className="inputField" /> <br />
+            </If>
+            Tasapainotaidot: <input type="checkbox" checked={focus.selected.categories.catBalance ? "checked" : ""} onChange={(e) => focus.selected.categories.catBalance = !focus.selected.categories.catBalance}  /> <br  />
+            Liikkumistaidot: <input type="checkbox" checked={focus.selected.categories.catMovement ? "checked" : ""} onChange={(e) => focus.selected.categories.catMovement = !focus.selected.categories.catMovement}  /> <br  />
+            Välineenkäsittelytaidot: <input type="checkbox" checked={focus.selected.categories.catEquipment ? "checked" : ""} onChange={(e) => focus.selected.categories.catEquipment = !focus.selected.categories.catEquipment}  /> <br  />
+            
+            <button onClick={() => focus.deleteConfirmation = true}>Poista haaste</button>
+            <If test={focus.deleteConfirmation === true}>   
+                <div>
+                    <p>Haluatko varmasti poistaa haasteen?</p>
+                </div>
+                <button onClick={() => Valaa.Resource.destroy(focus.selected)}>Kyllä</button>
+                <button onClick={() => focus.deleteConfirmation = false}>En</button>
+            </If>
+            
+            <button onClick={() => focus.acceptChange = true}>Vahvista muokkaus (ei toimi nyt)</button>
+            <If test={focus.acceptChange === true}>   
+                <div>Muutos vahvistettu.</div>
+            </If>
+    </div>  
+   
+</div>

@@ -1,0 +1,16 @@
+<div>
+    <If test={!focus.login}>
+        <form onSubmit={focus.connectToGroup}>
+            <input type="text" placeholder="Luokkasi pin" onChange={(e) => focus.loginString = e.target.value} />
+            <input type="text" placeholder="Nimimerkkisi" onChange={(e) => focus.nick = e.target.value} />
+            <button onClick={focus.connectToGroup}>Login</button>
+        </form>
+    </If>
+    <If test={focus.login}>
+        {
+        (() =>{focus.game()})()
+        }
+    </If>
+    <div id="game">
+    </div>
+</div> 

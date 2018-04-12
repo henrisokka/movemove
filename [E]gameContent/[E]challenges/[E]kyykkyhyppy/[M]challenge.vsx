@@ -1,0 +1,6 @@
+<div className={VSS(focus.challengeStyles, "wrap")}>
+    Haasteen nimi: <input type="text" placeholder="name" value={focus.name} onChange={(e) => focus.name = e.target.value} className="textInput" /> <br  />
+    Haasteen kuvaus: <input type="text" placeholder="description" value={focus.description} onChange={(e) => focus.description = e.target.value} className="textInput" /> <br  />
+    Haasteella on aikarajoite: <input type="checkbox" checked={focus.categories.timed ? "checked" : ""} onChange={(e) => focus.categories.timed = !focus.categories.timed} /> <br  />
+    <button>Vahvista muutokset</button>
+</div>    

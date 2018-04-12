@@ -1,0 +1,67 @@
+<div className={VSS(focus.editorStyles, "wrap")}>
+    <div className="apEditor">
+        <h2>Toimintapisteet</h2>
+        <h3>Luo uusi toimintapiste</h3>
+            
+            <form className="apCreateNew" onSubmit={(e)=> e.preventDefault()}>
+                <label for="apName">Toimintapisteen nimi: </label>
+                <input id="apName" type="text" value={focus.name} onChange={(e) => focus.name = e.target.value} />
+                <fieldset>
+                    <legend>Valitse toimintapisteen haaste</legend>
+                    
+                    <label for="apChallenge">Valitse haaste: </label> 
+                    <select id="apChallenge" onChange={(e) => focus.selectedChallenge = Valaa.Resource.getActiveResource(e.target.value)}>
+                        <option value="" selected disabled hidden >Valitse tästä</option>
+                        <option value={null}>Satunnainen</option>
+                        <ForEach focus={focus.challengeLib[Resource.unnamedOwnlings]}>
+                            <option value={focus[Resource.rawId]}>{focus.name}</option>
+                        </ForEach>
+                    </select> <br />
+                
+                    <label for="randomCheck" className="createChallengeLabel">Satunnainen tehtävä: (Ei toimi nyt. valitse dropdownista.)</label> <br />
+                    <input type="checkbox" id="randomCheck" checked={focus.randomChallenge ? "checked" : ""} onChange={(e) => focus.randomChallenge = !focus.randomChallenge} className="inputField"  /> <br  />
+                </fieldset>  
+                
+                <button onClick={() =>
+                {
+                    const scene= new focus.proto({name: focus.name, owner: focus.actionPoints});
+                    scene.name = focus.name;
+                    scene.challenge = focus.selectedChallenge;
+                    scene.description = focus.description;
+                    focus.selected = scene;
+                }
+                    
+                }>Luo uusi toimintapiste</button>
+         
+            <h3>Muokkaa toimintapisteitä</h3>
+                <form className="apChooseAp" onSubmit={(e)=> e.preventDefault()}>
+                    <label for="chooseApToEdit">Valitse muokattava toimintapiste: </label>
+                    <select name="chooseApToEdit" onChange={(e) => {
+                        focus.selected = Valaa.Resource.getActiveResource(e.target.value)
+                        if (focus.deleteConfirmation === true) {focus.deleteConfirmation = false}
+                    }}>
+                        <ForEach focus={focus.actionPoints[Resource.unnamedOwnlings]} context={{origin: focus}}>
+                            <option value={focus[Resource.rawId]}>{focus.name}</option>
+                        </ForEach>
+                    </select>
+                </form>
+    
+                <If test={focus.selected != undefined || focus.selected != null}>
+                    <ValaaScope focus={focus.selected} />
+                    <button onClick={() => focus.deleteConfirmation = true}>Poista toimintapiste</button>
+                    <If test={focus.deleteConfirmation === true}>   
+                        <div>
+                            <p>Haluatko varmasti poistaa toimintapisteen?</p>
+                        </div>
+                    <button onClick={() => {
+                        Valaa.Resource.destroy(focus.selected);
+                        focus.deleteConfirmation = false;
+                        
+                    }}>Kyllä</button>
+                    <button onClick={() => focus.deleteConfirmation = false}>En</button>
+                    </If>
+                </If>
+        
+        </form>
+    </div>
+</div>

@@ -1,0 +1,1 @@
+<ValaaScope focus={focus.createLocalPartition(focus.client)} lensName="LENS" />

@@ -1,0 +1,44 @@
+<div className="sceneEditor">
+   <h2>Scene editor</h2>
+   {/*<label for="uiMode">Valitse haluatko luoda uuden scenen vai muokata jo olemassa olevaa: </label>
+    <select defaultValue={focus.uiState} name="uiMode" onChange={(e) => focus.uiState = e.target.value}>
+        <option value="new">new</option>
+        <option value="edit">edit</option>
+    </select> <br />
+    <If test={focus.uiState==="edit"}>
+       
+    </If>*/}
+    
+    
+    {/*<If test={focus.uiState==="new"}>*/}
+    <div className="sceneEditorForm">
+        <div className="createScene">
+            <h3>Luo uusi skene</h3>
+            Nimi: <input type="text" placeholder="Skenen nimi" name="newSceneName" className="createSceneInput" onChange={(e) => focus.name = e.target.value} />
+                
+            <button className="submitButton" onClick={() => {
+                const scene= new focus.proto({name: focus.name, owner: focus.scenes});
+                scene.text = "";
+                scene.name = focus.name;
+                focus.selected = scene;
+            }}>Luo uusi skene</button>
+        </div>
+        {/*</If>*/}
+        
+        <div className="editScene">
+            <h3>Muokkaa olemassaolevaa skeneä</h3>
+                <label for="chooseEditScene">Valitse muokattava skene: </label>
+                <select name="chooseEditScene" onChange={(e) => focus.selected = Valaa.Resource.getActiveResource(e.target.value)}>
+                    <ForEach focus={focus.scenes[Resource.unnamedOwnlings]} context={{origin: focus}}>
+                        <option value={focus[Resource.rawId]}>{focus.name}</option>
+                    </ForEach>
+                </select>
+            {/*<If test={focus.uiState=="edit"}>*/}
+                <If test={focus.selected != undefined || focus.selected != null}>
+                    <ValaaScope focus={focus.selected} />
+                </If>
+            {/*</If>*/}
+        </div>
+    </div>
+   
+</div>

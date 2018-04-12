@@ -1,0 +1,115 @@
+<div className={VSS(focus.editorStyles, "wrap")}>
+    
+    <h3>Muokattava skene: {focus.name}</h3>
+    <form onSubmit={(e)=> e.preventDefault()}>
+        <label>Nimi: </label>
+        <input type="text" placeholder="name" value={focus.name} onChange={(e) => focus.name = e.target.value} />
+    </form>
+   
+    <If test={focus.update}> 
+        <div className="sceneAp">
+            <h4 title="Valitse skeneen lisättävät toimintapisteet.">Toimintapisteet</h4>
+            <ul className="sceneApList list">
+                <ForEach focus={focus.levelRoot.actionPoints[Resource.unnamedOwnlings]} context={{origin: focus}}>
+                    <If test={origin.update}>
+                        <li className="sceneApListItem">
+                            <div className="sceneApListItemName">{focus[Valaa.name]}</div>
+                        
+                            <If test={origin.isConnected(origin, focus, "in")}>
+                                <div className="ifContainer">
+                                    <div className="sceneApListButton sceneButton" onClick={() => origin.handleConnection(focus, "in")}>POISTA</div> 
+                                     
+                                    <form onSubmit={(e)=> e.preventDefault()} className="sceneApCoordinatesField">
+                                        <fieldset>
+                                            <label for="coordinates1">X-koordinaatit:</label> <input name="coordinates1" type="text" size="5" value={origin[Relatable.getRelations]("in", () => (this[Relation.target] === focus))[0].x}
+                                                onChange={(e) => origin[Relatable.getRelations]("in", () => (this[Relation.target] === focus))[0].x = e.target.value}
+                                            />
+                                            <label for="coordinates2">Y-koordinaatit:</label> <input name="coordinates2" type="text" size="5" value={origin[Relatable.getRelations]("in", () => (this[Relation.target] === focus))[0].y} 
+                                            onChange={(e) => origin[Relatable.getRelations]("in", () => (this[Relation.target] === focus))[0].y = e.target.value}
+                                            />
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </If>
+                       
+                            <If test={!origin.isConnected(origin, focus, "in")}>
+                                <div className="sceneApListButton sceneButton" onClick={() => origin.handleConnection(focus, "in")}>LISÄÄ</div>
+                            </If>
+                        </li>
+                    </If>
+                </ForEach>
+            </ul>
+        </div>
+    </If>
+    
+    <div>
+        <If test={focus.update}>
+            <div className="sceneRelatedScenes">
+                <h4 title="valitse skenet joihin tästä skenestä pääsee">Ovet</h4>
+                <p>Valitse tästä mihin muihin skeneihin tästä skenestä pääsee.</p>
+                <ul className="sceneRelatedScenesList list">
+                    <ForEach focus={focus.levelRoot.scenes[Resource.unnamedOwnlings]} context={{origin: focus}}>
+                        
+                        <If test={origin.update}>
+                            
+                            <li className="sceneRel" onClick={() => origin.handleConnection(focus, "door")}>
+                                <div className="sceneRelCont">{focus[Valaa.name]}</div>
+                                <If test={origin.isConnected(origin, focus, "door")}>
+                                    <div className="sceneRelCont2 sceneButton">POISTA</div>
+                                </If>
+                                <If test={!origin.isConnected(origin, focus, "door")}>
+                                    <div className="sceneRelCont2 sceneButton">LISÄÄ</div>
+                                </If>
+                            </li>
+                            
+                        </If>
+                    </ForEach>
+                </ul>
+            </div>
+        </If>
+    </div>
+    
+    <div>
+        <If test={focus.update}>
+            <div className="sceneDoors">
+                <h4>Koordinaatit</h4>
+                <ForEach focus={focus.getRelationsAndOthers(focus, "door").relations} context={{origin: focus}}>
+                    <If test={focus[Relation.source] === origin}>
+                        <h3>{focus[Relation.target][Valaa.name]}</h3>
+                        <form onSubmit={(e)=> e.preventDefault()}>
+                             <fieldset className="sceneDoorsFieldset">
+                                <legend>Tämän huoneen koordinaatit:</legend>
+                                <label for="coordinates"> X:</label>
+                                <input type="number" name="coordinates" value={focus.sourceX} onChange={(e) => focus.sourceX = e.target.value} />
+                                <label> Y:</label>
+                                <input type="number" value={focus.sourceY} onChange={(e) => focus.sourceY = e.target.value} />
+                            </fieldset>
+                            <br/>
+                            <fieldset className="sceneDoorsFieldset">
+                                <legend>Kohdehuoneen koordinaatit:</legend>
+                                X: <input type="number" value={focus.targetX} onChange={(e) => focus.targetX = e.target.value} />
+                                Y: <input type="number" value={focus.targetY} onChange={(e) => focus.targetY = e.target.value} />
+                            </fieldset>
+                        </form>
+                    </If>
+                    <If test={focus[Relation.target] === origin}>
+                        <h3>{focus[Relation.source][Valaa.name]}</h3>
+                        <form onSubmit={(e)=> e.preventDefault()}>
+                            <fieldset className="sceneDoorsFieldset">
+                                <legend>Tämän huoneen koordinaatit</legend>
+                                X: <input type="number" value={focus.targetX} onChange={(e) => focus.targetX = e.target.value} />
+                                Y: <input type="number" value={focus.targetY} onChange={(e) => focus.targetY = e.target.value} />
+                            </fieldset>
+                            <br/>
+                            <fieldset className="sceneDoorsFieldset">
+                                <legend>Kohdehuoneen koordinaatit</legend>
+                                X: <input type="number" value={focus.sourceX} onChange={(e) => focus.sourceX = e.target.value} />
+                                Y: <input type="number" value={focus.sourceY} onChange={(e) => focus.sourceY = e.target.value} />
+                            </fieldset>
+                        </form>
+                    </If>
+                </ForEach>
+            </div>
+        </If>
+    </div>
+</div>

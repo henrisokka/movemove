@@ -1,0 +1,16 @@
+<div>
+    <button onClick={() => {
+        const newDialogue = new focus.Dialogue({owner: focus.creationTarget});
+        newDialogue.content = "";
+        focus.activeDialogue.next = newDialogue;
+        console.log(focus.next);
+
+        focus.activeDialogue = newDialogue;
+    }}>Set next dialogue</button><br />
+    
+    <textarea placeholder="content" value={focus.activeDialogue.content} onChange={(e) => {
+        focus.activeDialogue.content = e.target.value;
+    }} />
+    
+    <p>{focus.activeDialogue.content}</p>
+</div>

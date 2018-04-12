@@ -1,0 +1,35 @@
+<div>
+    <h3>{focus.name}</h3>
+    <form className="apChooseChal" onSubmit={(e)=> e.preventDefault()}>
+        <label for="apName" className="createChallengeLabel"> Toimintapisteen nimi: </label> <br />
+        <input name="apName" type="text" placeholder="name" value={focus.name} onChange={(e) => { 
+            const value = e.target.value;
+            focus.name = value;
+            focus[Valaa.name] = value;
+        }} />
+        <br />
+        <label for="apDescription">Toimintapisteen kuvaus</label>
+        <input id="apDescription" className="apDescriptionInput" type="text" placeholder="description" value={focus.description} onChange={(e) => focus.description = e.target.value} /><br />
+       
+        <label for="apChallenge"> Toimintapisteen haaste: </label>
+        <select id="apChallenge" onChange={(e) => focus.chosenChallenge = Valaa.Resource.getActiveResource(e.target.value)}>
+            <option value={focus.chosenChallenge[Resource.rawId]}>{focus.chosenChallenge.name}
+            </option>
+            {/*<option value={null}>Satunnainen</option>*/}
+            <ForEach focus={focus.challengeLib[Resource.unnamedOwnlings]} context={{origin: focus}}>
+                <If test={focus[Resource.rawId] != origin.chosenChallenge[Resource.rawId]}>
+                    <option value={focus[Resource.rawId]}>{focus.name}</option>
+                    </If>
+            </ForEach>
+        </select> <br />
+        Toimintapisteen kuvake kartalla: <select defaultValue={focus.type} onChange={(e) => focus.type = e.target.value}>
+            <option value="house">House</option>
+            <option value="dam">Dam</option>
+            <option value="forest">Forest</option>
+        </select> <br/>
+        
+        
+    </form>
+    
+    
+</div>

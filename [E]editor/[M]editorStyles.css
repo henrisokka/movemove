@@ -1,0 +1,167 @@
+
+.wrap p {
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+}
+
+.wrap h1 {
+   font-size: 1.6em;
+   margin: 0.5em 0 0.3em 0;
+}
+.wrap h2 {
+    font-size: 1.4em;
+    margin: 1em 0 0.3em 0;
+}
+
+.wrap h3 {
+    font-size: 1.2em;
+    margin: 1em 0 0.3em 0;
+}
+
+.wrap h4 {
+    font-size: 1.1em;
+    margin: 1em 0 0.3em 0;
+}
+
+.wrap button {
+    margin-top: 20px;
+}
+
+.wrap .submitButton {
+    margin: 1em 0 1em 0;
+}
+
+.wrap .selectDefault {
+    color: red;
+}
+
+/* Scene editor styles */
+
+.wrap .sceneButton {
+    cursor: pointer;
+    width: 40px;
+    height: 20px;
+    border: thin solid black;
+}
+.wrap .list {
+    padding: 0;
+}
+.wrap .sceneEditor {
+    background-color: #333;
+    padding: 1em;
+    border: 0.35em solid white;
+    margin: 0 0 3em 0;
+}
+.wrap .createScene {
+    margin: 0 0 1.5em 0;
+    padding: 0 0 1em 0;
+    border-bottom: 0.2em solid white;
+}
+
+.wrap .createScene .submitButton {
+    margin: 0 0 0 2em;
+}
+
+.wrap .sceneAp {
+    margin: 1em 0 0 0;
+    padding: 1em 0 1em 0;
+    border-top: 0.1em solid #707070;
+    border-bottom: 0.1em solid #707070;
+}
+
+.wrap .sceneApListItem {
+    margin: 1em 0 0.3em 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: stretch;
+    justify-content: flex-start;
+    line-height: 2em;
+    height: 2em;
+}
+
+.wrap .sceneApListItemName {
+    flex: 0 0 20em;
+}
+
+.wrap .ifContainer {
+    display: flex;
+    flex: 1;
+    flex-flow: row wrap;
+}
+
+.wrap .sceneApListButton {
+    flex: 0 0 5em;
+    margin-right: 2em;
+}
+
+.wrap .sceneApCoordinatesField { 
+    flex: 1 1 1;
+}
+
+.wrap .sceneApCoordinatesField input{
+    min-width: 0;
+    height: 1.5em;
+    margin-right: 0.5em;
+    border: none;
+}
+
+.wrap .sceneRel {
+    margin: 1em 0 0.3em 0;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.wrap .sceneRelCont {
+    flex: 0 0 20em;
+}
+.wrap .sceneRelCont2 {
+    flex: 0 0 5em;
+   
+}
+
+.wrap .sceneDoors input {
+    margin: 0.25em 0 0.25em 0;
+}
+
+
+/* Action point editor styles */
+
+.wrap .apEditor {
+    background-color: #333;
+    padding: 1em;
+    border: 0.35em solid white;
+    margin: 0 0 3em 0;
+}
+
+.wrap .apDescriptionInput {
+    width: 300px;
+    height: 50px;
+}
+
+.wrap .apChooseAp select {
+    margin: 0 0 0 0.5em;
+}
+
+
+/* Challenge editor styles */
+
+.wrap .challengeEditor {
+    background-color: #333;
+    padding: 1em;
+    border: 0.35em solid white;
+    margin: 0 0 3em 0;
+}
+
+.wrap .challengeEditor .descriptionField {
+    width: 300px;
+    height: 50px;
+}
+
+.wrap .inputField {
+    margin-bottom: 1em;
+}
+
+.wrap .formLine {
+    display: flex;
+    flex-direction: row;
+}
